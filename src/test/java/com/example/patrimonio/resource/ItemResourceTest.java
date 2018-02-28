@@ -1,9 +1,12 @@
 package com.example.patrimonio.resource;
 
 import static com.jayway.restassured.RestAssured.get;
-import static org.junit.jupiter.api.Assertions.fail;
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import org.junit.jupiter.api.Test;
+
+import com.jayway.restassured.http.ContentType;
 
 /**
  * @author Vitor Lima
@@ -18,9 +21,9 @@ class ItemResourceTest {
     void testListar() {
         get("/item").
         then().
-        statusCode(200);/*.
-        and().
-        contentType(ContentType.JSON);*/
+        contentType(ContentType.JSON).
+        body("etiqueta", containsString("AU9875"));
+
     }
 
     /**
@@ -28,7 +31,11 @@ class ItemResourceTest {
      */
     @Test
     void testAdicionar() {
-        fail("Not yet implemented");
+        given().
+        contentType(ContentType.JSON).
+        body("../../src/main/resources/item.json").
+        when().
+        post("/item");
     }
 
 }
